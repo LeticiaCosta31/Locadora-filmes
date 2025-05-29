@@ -1,0 +1,13 @@
+com\seuprojeto\locadora\model\Categoria.class
+com\seuprojeto\locadora\service\RelatorioLocacoes.class
+com\seuprojeto\locadora\model\Locacao.class
+com\seuprojeto\locadora\ui\Main.class
+com\seuprojeto\locadora\model\Filme.class
+com\seuprojeto\locadora\model\Cliente.class
+com\seuprojeto\locadora\model\Pagamento.class
+com\seuprojeto\locadora\service\SistemaLocadora.class
+com\seuprojeto\locadora\model\Estoque.class
+com\seuprojeto\locadora\service\Locadora.class
+com\seuprojeto\locadora\service\Notificacao.class
+com\seuprojeto\locadora\model\Funcionario.class
+com\seuprojeto\locadora\ui\ValidadorEntrada.class
