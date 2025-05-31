@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Locacao.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Locadora Filmes</a> &gt; <a href="index.source.html" class="el_package">com.seuprojeto.locadora.model</a> &gt; <span class="el_source">Locacao.java</span></div><h1>Locacao.java</h1><pre class="source lang-java linenums">package com.seuprojeto.locadora.model;
+
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
+public class Locacao {
+    private int id;
+    private Cliente cliente;
+    private Filme filme;
+    private LocalDate dataAluguel;
+    private LocalDate dataPrevistaDevolucao;
+    private boolean devolvido;
+
+<span class="fc" id="L14">    public Locacao(int id, Cliente cliente, Filme filme, LocalDate dataAluguel, LocalDate dataPrevistaDevolucao) {</span>
+<span class="fc" id="L15">        this.id = id;</span>
+<span class="fc" id="L16">        this.cliente = cliente;</span>
+<span class="fc" id="L17">        this.filme = filme;</span>
+<span class="fc" id="L18">        this.dataAluguel = dataAluguel;</span>
+<span class="fc" id="L19">        this.dataPrevistaDevolucao = dataPrevistaDevolucao;</span>
+<span class="fc" id="L20">        this.devolvido = false;</span>
+<span class="fc" id="L21">    }</span>
+
+<span class="fc" id="L23">    public Locacao(){</span>
+        
+<span class="fc" id="L25">    }</span>
+
+<span class="fc" id="L27">    public int getId() { return id; }</span>
+<span class="fc" id="L28">    public Cliente getCliente() { return cliente; }</span>
+<span class="fc" id="L29">    public Filme getFilme() { return filme; }</span>
+<span class="fc" id="L30">    public LocalDate getDataAluguel() { return dataAluguel; }</span>
+<span class="fc" id="L31">    public LocalDate getDataPrevistaDevolucao() { return dataPrevistaDevolucao; }</span>
+<span class="fc" id="L32">    public boolean isDevolvido() { return devolvido; }</span>
+    
+
+    public void setId(int id) {
+<span class="fc" id="L36">        this.id = id;</span>
+<span class="fc" id="L37">    }</span>
+
+    public void setCliente(Cliente cliente) {
+<span class="fc" id="L40">        this.cliente = cliente;</span>
+<span class="fc" id="L41">    }</span>
+
+    public void setFilme(Filme filme) {
+<span class="fc" id="L44">        this.filme = filme;</span>
+<span class="fc" id="L45">    }</span>
+
+    public void setDataAluguel(LocalDate dataAluguel) {
+<span class="fc" id="L48">        this.dataAluguel = dataAluguel;</span>
+<span class="fc" id="L49">    }</span>
+
+    public void setDataPrevistaDevolucao(LocalDate dataPrevistaDevolucao) {
+<span class="fc" id="L52">        this.dataPrevistaDevolucao = dataPrevistaDevolucao;</span>
+<span class="fc" id="L53">    }</span>
+
+    public void setDevolvido(boolean devolvido) {
+<span class="fc" id="L56">        this.devolvido = devolvido;</span>
+<span class="fc" id="L57">    }</span>
+
+    public void registrarDevolucao() {
+<span class="fc" id="L60">        this.devolvido = true;</span>
+<span class="fc" id="L61">    }</span>
+
+    public long calcularAtraso() {
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (!devolvido) {</span>
+<span class="nc" id="L65">            long dias = ChronoUnit.DAYS.between(dataPrevistaDevolucao, LocalDate.now());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">            return dias &gt; 0 ? dias : 0;</span>
+        }
+<span class="nc" id="L68">        return 0;</span>
+    }
+
+    public double calcularMulta(double valorPorDia) {
+<span class="nc" id="L72">        return calcularAtraso() * valorPorDia;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="fc" id="L77">        return &quot;Locacao [id=&quot; + id + &quot;, cliente=&quot; + cliente.getNome() + &quot;, filme=&quot; + filme.getTitulo() +</span>
+<span class="fc" id="L78">                &quot;, dataAluguel=&quot; + dataAluguel + &quot;, dataPrevistaDevolucao=&quot; + dataPrevistaDevolucao +</span>
+<span class="fc" id="L79">                &quot;, devolvido=&quot; + devolvido + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

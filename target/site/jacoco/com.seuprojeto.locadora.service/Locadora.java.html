@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Locadora.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Locadora Filmes</a> &gt; <a href="index.source.html" class="el_package">com.seuprojeto.locadora.service</a> &gt; <span class="el_source">Locadora.java</span></div><h1>Locadora.java</h1><pre class="source lang-java linenums">package com.seuprojeto.locadora.service;
+
+import com.seuprojeto.locadora.model.Cliente;
+import com.seuprojeto.locadora.model.Filme;
+import com.seuprojeto.locadora.model.Locacao;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.*;
+
+public class Locadora {
+
+<span class="fc" id="L15">    private static final Logger logger = Logger.getLogger(Locadora.class.getName());</span>
+
+<span class="fc" id="L17">    private final String url = &quot;jdbc:sqlite:./locadora.db&quot;; // ajuste seu caminho</span>
+
+<span class="fc" id="L19">    private final Object lockDB = new Object(); // objeto para sincronização</span>
+
+    private Connection conn; // conexão única
+
+    static {
+        try {
+<span class="fc" id="L25">            LogManager.getLogManager().reset();</span>
+<span class="fc" id="L26">            FileHandler fileHandler = new FileHandler(&quot;locadora.log&quot;, true);</span>
+<span class="fc" id="L27">            fileHandler.setFormatter(new SimpleFormatter());</span>
+<span class="fc" id="L28">            logger.addHandler(fileHandler);</span>
+<span class="fc" id="L29">            logger.setLevel(Level.ALL);</span>
+<span class="pc" id="L30">        } catch (Exception e) {</span>
+<span class="nc" id="L31">            System.out.println(&quot;Erro ao configurar o sistema de logs: &quot; + e.getMessage());</span>
+        }
+<span class="fc" id="L33">    }</span>
+
+<span class="fc" id="L35">    public Locadora() {</span>
+        try {
+<span class="fc" id="L37">            this.conn = DriverManager.getConnection(url);</span>
+<span class="fc" id="L38">            logger.info(&quot;Conexão com o banco de dados estabelecida.&quot;);</span>
+<span class="pc" id="L39">        } catch (SQLException e) {</span>
+<span class="nc" id="L40">            logger.log(Level.SEVERE, &quot;Erro ao conectar ao banco de dados.&quot;, e);</span>
+        }
+<span class="fc" id="L42">        criarTabelasSeNaoExistem();</span>
+<span class="fc" id="L43">    }</span>
+
+    // Fecha a conexão quando terminar
+    public void close() {
+        try {
+<span class="pc bpc" id="L48" title="2 of 4 branches missed.">            if (conn != null &amp;&amp; !conn.isClosed()) {</span>
+<span class="fc" id="L49">                conn.close();</span>
+<span class="fc" id="L50">                logger.info(&quot;Conexão com banco fechada.&quot;);</span>
+            }
+<span class="pc" id="L52">        } catch (SQLException e) {</span>
+<span class="nc" id="L53">            logger.log(Level.SEVERE, &quot;Erro ao fechar conexão.&quot;, e);</span>
+        }
+<span class="fc" id="L55">    }</span>
+
+    public void limparTabelas() {
+<span class="fc" id="L58">    synchronized(lockDB) {</span>
+<span class="fc" id="L59">        try (Statement stmt = conn.createStatement()) {</span>
+<span class="fc" id="L60">            stmt.executeUpdate(&quot;DELETE FROM locacao&quot;);</span>
+<span class="fc" id="L61">            stmt.executeUpdate(&quot;DELETE FROM cliente&quot;);</span>
+<span class="fc" id="L62">            stmt.executeUpdate(&quot;DELETE FROM filmeMarvel&quot;);</span>
+<span class="fc" id="L63">            logger.info(&quot;Tabelas limpas com sucesso.&quot;);</span>
+<span class="nc" id="L64">        } catch (SQLException e) {</span>
+<span class="nc" id="L65">            logger.log(Level.SEVERE, &quot;Erro ao limpar tabelas.&quot;, e);</span>
+<span class="nc" id="L66">            throw new RuntimeException(e);</span>
+        }
+    }
+<span class="fc" id="L69">}</span>
+
+
+    private void criarTabelasSeNaoExistem() {
+<span class="fc" id="L73">        String sqlFilme = &quot;CREATE TABLE IF NOT EXISTS filmeMarvel (&quot; +</span>
+                &quot;id INTEGER PRIMARY KEY,&quot; +
+                &quot;titulo TEXT NOT NULL,&quot; +
+                &quot;diretor TEXT NOT NULL,&quot; +
+                &quot;ano_lancamento INTEGER NOT NULL,&quot; +
+                &quot;genero TEXT,&quot; +
+                &quot;data_estreia TEXT NOT NULL,&quot; +
+                &quot;categoria TEXT,&quot; +
+                &quot;duracao INTEGER,&quot; +
+                &quot;quantidade_estoque INTEGER DEFAULT 0&quot; +
+                &quot;);&quot;;
+
+<span class="fc" id="L85">        String sqlCliente = &quot;CREATE TABLE IF NOT EXISTS cliente (&quot; +</span>
+                &quot;id INTEGER PRIMARY KEY,&quot; +
+                &quot;nome TEXT NOT NULL,&quot; +
+                &quot;telefone TEXT NOT NULL,&quot; +
+                &quot;endereco TEXT&quot; +
+                &quot;);&quot;;
+
+<span class="fc" id="L92">        String sqlLocacao = &quot;CREATE TABLE IF NOT EXISTS locacao (&quot; +</span>
+                &quot;id INTEGER PRIMARY KEY AUTOINCREMENT,&quot; +
+                &quot;id_cliente INTEGER NOT NULL,&quot; +
+                &quot;id_filme INTEGER NOT NULL,&quot; +
+                &quot;data_aluguel TEXT NOT NULL,&quot; +
+                &quot;data_prevista_devolucao TEXT NOT NULL,&quot; +
+                &quot;devolvido INTEGER DEFAULT 0,&quot; +
+                &quot;FOREIGN KEY(id_cliente) REFERENCES cliente(id),&quot; +
+                &quot;FOREIGN KEY(id_filme) REFERENCES filmeMarvel(id)&quot; +
+                &quot;);&quot;;
+
+<span class="fc" id="L103">        synchronized(lockDB) {</span>
+<span class="fc" id="L104">            try (Statement stmt = conn.createStatement()) {</span>
+<span class="fc" id="L105">                stmt.execute(sqlFilme);</span>
+<span class="fc" id="L106">                stmt.execute(sqlCliente);</span>
+<span class="fc" id="L107">                stmt.execute(sqlLocacao);</span>
+<span class="nc" id="L108">            } catch (SQLException e) {</span>
+<span class="nc" id="L109">                logger.log(Level.SEVERE, &quot;Erro ao criar tabelas&quot;, e);</span>
+            }
+        }
+<span class="fc" id="L112">    }</span>
+
+    // FILME
+
+    public void cadastrarFilme(Filme filme) {
+<span class="fc" id="L117">        String sql = &quot;INSERT INTO filmeMarvel(id, titulo, diretor, ano_lancamento, genero, data_estreia, categoria, duracao, quantidade_estoque) &quot;</span>
+                + &quot;VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)&quot;;
+
+<span class="fc" id="L120">        synchronized(lockDB) {</span>
+<span class="fc" id="L121">            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L122">                pstmt.setInt(1, filme.getId());</span>
+<span class="fc" id="L123">                pstmt.setString(2, filme.getTitulo());</span>
+<span class="fc" id="L124">                pstmt.setString(3, filme.getDiretor());</span>
+<span class="fc" id="L125">                pstmt.setInt(4, filme.getAnoLancamento());</span>
+<span class="fc" id="L126">                pstmt.setString(5, filme.getGenero());</span>
+<span class="fc" id="L127">                pstmt.setString(6, filme.getDataEstreia());</span>
+<span class="fc" id="L128">                pstmt.setString(7, filme.getCategoria());</span>
+<span class="fc" id="L129">                pstmt.setInt(8, filme.getDuracao());</span>
+<span class="fc" id="L130">                pstmt.setInt(9, filme.getQuantidadeEstoque());</span>
+<span class="fc" id="L131">                pstmt.executeUpdate();</span>
+<span class="fc" id="L132">                logger.info(&quot;Filme cadastrado com sucesso: &quot; + filme.getTitulo());</span>
+<span class="nc" id="L133">            } catch (SQLException e) {</span>
+<span class="nc" id="L134">                logger.log(Level.SEVERE, &quot;Erro ao cadastrar filme: &quot; + filme.getTitulo(), e);</span>
+            }
+        }
+<span class="fc" id="L137">    }</span>
+
+    public List&lt;Filme&gt; listarFilmes() {
+<span class="fc" id="L140">        List&lt;Filme&gt; filmes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L141">        String sql = &quot;SELECT * FROM filmeMarvel&quot;;</span>
+
+<span class="fc" id="L143">        try (Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L144">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L146">                Filme filme = new Filme(</span>
+<span class="fc" id="L147">                        rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L148">                        rs.getString(&quot;titulo&quot;),</span>
+<span class="fc" id="L149">                        rs.getString(&quot;categoria&quot;),</span>
+<span class="fc" id="L150">                        rs.getInt(&quot;duracao&quot;),</span>
+<span class="fc" id="L151">                        rs.getInt(&quot;quantidade_estoque&quot;),</span>
+<span class="fc" id="L152">                        rs.getString(&quot;diretor&quot;),</span>
+<span class="fc" id="L153">                        rs.getInt(&quot;ano_lancamento&quot;),</span>
+<span class="fc" id="L154">                        rs.getString(&quot;genero&quot;),</span>
+<span class="fc" id="L155">                        rs.getString(&quot;data_estreia&quot;));</span>
+
+<span class="fc" id="L157">                filmes.add(filme);</span>
+            }
+<span class="fc" id="L159">            logger.info(&quot;Filmes listados com sucesso. Total: &quot; + filmes.size());</span>
+<span class="nc" id="L160">        } catch (SQLException e) {</span>
+<span class="nc" id="L161">            logger.log(Level.SEVERE, &quot;Erro ao listar filmes.&quot;, e);</span>
+        }
+<span class="fc" id="L163">        return filmes;</span>
+    }
+
+    public Filme buscarFilmePorId(int id) {
+<span class="fc" id="L167">        String sql = &quot;SELECT * FROM filmeMarvel WHERE id = ?&quot;;</span>
+<span class="fc" id="L168">        Filme filme = null;</span>
+
+<span class="fc" id="L170">        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L171">            pstmt.setInt(1, id);</span>
+<span class="fc" id="L172">            try (ResultSet rs = pstmt.executeQuery()) {</span>
+<span class="fc bfc" id="L173" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L174">                    filme = new Filme(</span>
+<span class="fc" id="L175">                            rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L176">                            rs.getString(&quot;titulo&quot;),</span>
+<span class="fc" id="L177">                            rs.getString(&quot;categoria&quot;),</span>
+<span class="fc" id="L178">                            rs.getInt(&quot;duracao&quot;),</span>
+<span class="fc" id="L179">                            rs.getInt(&quot;quantidade_estoque&quot;),</span>
+<span class="fc" id="L180">                            rs.getString(&quot;diretor&quot;),</span>
+<span class="fc" id="L181">                            rs.getInt(&quot;ano_lancamento&quot;),</span>
+<span class="fc" id="L182">                            rs.getString(&quot;genero&quot;),</span>
+<span class="fc" id="L183">                            rs.getString(&quot;data_estreia&quot;));</span>
+                }
+            }
+<span class="fc bfc" id="L186" title="All 2 branches covered.">            if(filme != null)</span>
+<span class="fc" id="L187">                logger.info(&quot;Filme encontrado: &quot; + filme.getTitulo());</span>
+<span class="nc" id="L188">        } catch (SQLException e) {</span>
+<span class="nc" id="L189">            logger.log(Level.SEVERE, &quot;Erro ao buscar filme com ID: &quot; + id, e);</span>
+        }
+<span class="fc" id="L191">        return filme;</span>
+    }
+
+    public void atualizarFilme(Filme filme) {
+<span class="fc" id="L195">        String sql = &quot;UPDATE filmeMarvel SET titulo = ?, categoria = ?, duracao = ?, quantidade_estoque = ?, diretor = ?, ano_lancamento = ?, genero = ?, data_estreia = ? WHERE id = ?&quot;;</span>
+
+<span class="fc" id="L197">        synchronized(lockDB) {</span>
+<span class="fc" id="L198">            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L199">                pstmt.setString(1, filme.getTitulo());</span>
+<span class="fc" id="L200">                pstmt.setString(2, filme.getCategoria());</span>
+<span class="fc" id="L201">                pstmt.setInt(3, filme.getDuracao());</span>
+<span class="fc" id="L202">                pstmt.setInt(4, filme.getQuantidadeEstoque());</span>
+<span class="fc" id="L203">                pstmt.setString(5, filme.getDiretor());</span>
+<span class="fc" id="L204">                pstmt.setInt(6, filme.getAnoLancamento());</span>
+<span class="fc" id="L205">                pstmt.setString(7, filme.getGenero());</span>
+<span class="fc" id="L206">                pstmt.setString(8, filme.getDataEstreia());</span>
+<span class="fc" id="L207">                pstmt.setInt(9, filme.getId());</span>
+
+<span class="fc" id="L209">                int updated = pstmt.executeUpdate();</span>
+<span class="pc bpc" id="L210" title="1 of 2 branches missed.">                if (updated == 0) {</span>
+<span class="nc" id="L211">                    logger.warning(&quot;Nenhum filme atualizado com o id: &quot; + filme.getId());</span>
+<span class="nc" id="L212">                } else {</span>
+<span class="fc" id="L213">                    logger.info(&quot;Filme atualizado com sucesso: &quot; + filme.getTitulo());</span>
+                }
+<span class="nc" id="L215">            } catch (SQLException e) {</span>
+<span class="nc" id="L216">                logger.log(Level.SEVERE, &quot;Erro ao atualizar filme: &quot; + filme.getTitulo(), e);</span>
+            }
+        }
+<span class="fc" id="L219">    }</span>
+
+    public void deletarFilme(int id) {
+<span class="fc" id="L222">        String sql = &quot;DELETE FROM filmeMarvel WHERE id = ?&quot;;</span>
+
+<span class="fc" id="L224">        synchronized(lockDB) {</span>
+<span class="fc" id="L225">            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L226">                pstmt.setInt(1, id);</span>
+<span class="fc" id="L227">                pstmt.executeUpdate();</span>
+<span class="fc" id="L228">                logger.info(&quot;Filme deletado com sucesso. ID: &quot; + id);</span>
+<span class="nc" id="L229">            } catch (SQLException e) {</span>
+<span class="nc" id="L230">                logger.log(Level.SEVERE, &quot;Erro ao deletar filme com ID: &quot; + id, e);</span>
+            }
+        }
+<span class="fc" id="L233">    }</span>
+
+    // CLIENTE
+
+    public void cadastrarCliente(Cliente cliente) {
+<span class="fc" id="L238">        String sql = &quot;INSERT INTO cliente(id, nome, telefone, endereco) VALUES (?, ?, ?, ?)&quot;;</span>
+
+<span class="fc" id="L240">        synchronized(lockDB) {</span>
+<span class="fc" id="L241">            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L242">                pstmt.setInt(1, cliente.getId());</span>
+<span class="fc" id="L243">                pstmt.setString(2, cliente.getNome());</span>
+<span class="fc" id="L244">                pstmt.setString(3, cliente.getTelefone());</span>
+<span class="fc" id="L245">                pstmt.setString(4, cliente.getEndereco());</span>
+<span class="fc" id="L246">                pstmt.executeUpdate();</span>
+<span class="fc" id="L247">                logger.info(&quot;Cliente cadastrado com sucesso: &quot; + cliente.getNome());</span>
+<span class="nc" id="L248">            } catch (SQLException e) {</span>
+<span class="nc" id="L249">                logger.log(Level.SEVERE, &quot;Erro ao cadastrar cliente: &quot; + cliente.getNome(), e);</span>
+            }
+        }
+<span class="fc" id="L252">    }</span>
+
+    public List&lt;Cliente&gt; listarClientes() {
+<span class="fc" id="L255">        List&lt;Cliente&gt; clientes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L256">        String sql = &quot;SELECT * FROM cliente&quot;;</span>
+
+<span class="fc" id="L258">        try (Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L259">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="fc bfc" id="L260" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L261">                Cliente cliente = new Cliente(</span>
+<span class="fc" id="L262">                        rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L263">                        rs.getString(&quot;nome&quot;),</span>
+<span class="fc" id="L264">                        rs.getString(&quot;telefone&quot;),</span>
+<span class="fc" id="L265">                        rs.getString(&quot;endereco&quot;));</span>
+<span class="fc" id="L266">                clientes.add(cliente);</span>
+            }
+<span class="fc" id="L268">            logger.info(&quot;Clientes listados com sucesso. Total: &quot; + clientes.size());</span>
+<span class="nc" id="L269">        } catch (SQLException e) {</span>
+<span class="nc" id="L270">            logger.log(Level.SEVERE, &quot;Erro ao listar clientes.&quot;, e);</span>
+        }
+<span class="fc" id="L272">        return clientes;</span>
+    }
+
+    public Cliente buscarClientePorId(int id) {
+<span class="fc" id="L276">        String sql = &quot;SELECT * FROM cliente WHERE id = ?&quot;;</span>
+<span class="fc" id="L277">        Cliente cliente = null;</span>
+
+<span class="fc" id="L279">        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {</span>
+<span class="fc" id="L280">            pstmt.setInt(1, id);</span>
+<span class="fc" id="L281">            try (ResultSet rs = pstmt.executeQuery()) {</span>
+<span class="fc bfc" id="L282" title="All 2 branches covered.">                if (rs.next()) {</span>
+<span class="fc" id="L283">                    cliente = new Cliente(</span>
+<span class="fc" id="L284">                            rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L285">                            rs.getString(&quot;nome&quot;),</span>
+<span class="fc" id="L286">                            rs.getString(&quot;telefone&quot;),</span>
+<span class="fc" id="L287">                            rs.getString(&quot;endereco&quot;));</span>
+                }
+            }
+<span class="fc bfc" id="L290" title="All 2 branches covered.">            if(cliente != null)</span>
+<span class="fc" id="L291">                logger.info(&quot;Cliente encontrado: &quot; + cliente.getNome());</span>
+<span class="nc" id="L292">        } catch (SQLException e) {</span>
+<span class="nc" id="L293">            logger.log(Level.SEVERE, &quot;Erro ao buscar cliente com ID: &quot; + id, e);</span>
+        }
+<span class="fc" id="L295">        return cliente;</span>
+    }
+
+    // LOCAÇÃO
+
+    public Locacao realizarLocacao(int idCliente, int idFilme, LocalDate dataPrevistaDevolucao) {
+<span class="fc" id="L301">        Cliente cliente = buscarClientePorId(idCliente);</span>
+<span class="fc" id="L302">        Filme filme = buscarFilmePorId(idFilme);</span>
+
+<span class="fc bfc" id="L304" title="All 2 branches covered.">        if (cliente == null) {</span>
+<span class="fc" id="L305">            throw new IllegalArgumentException(&quot;Cliente não encontrado&quot;);</span>
+        }
+<span class="fc bfc" id="L307" title="All 2 branches covered.">        if (filme == null) {</span>
+<span class="fc" id="L308">            throw new IllegalArgumentException(&quot;Filme não encontrado&quot;);</span>
+        }
+<span class="fc bfc" id="L310" title="All 2 branches covered.">        if (filme.getQuantidadeEstoque() &lt;= 0) {</span>
+<span class="fc" id="L311">            throw new IllegalStateException(&quot;Filme sem estoque disponível&quot;);</span>
+        }
+
+<span class="fc" id="L314">        String sql = &quot;INSERT INTO locacao(id_cliente, id_filme, data_aluguel, data_prevista_devolucao, devolvido) VALUES (?, ?, ?, ?, 0)&quot;;</span>
+
+<span class="fc" id="L316">        synchronized(lockDB) {</span>
+<span class="fc" id="L317">            try (PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {</span>
+<span class="fc" id="L318">                pstmt.setInt(1, idCliente);</span>
+<span class="fc" id="L319">                pstmt.setInt(2, idFilme);</span>
+<span class="fc" id="L320">                pstmt.setString(3, LocalDate.now().toString());</span>
+<span class="fc" id="L321">                pstmt.setString(4, dataPrevistaDevolucao.toString());</span>
+<span class="fc" id="L322">                pstmt.executeUpdate();</span>
+
+<span class="fc" id="L324">                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">                    if (generatedKeys.next()) {</span>
+<span class="fc" id="L326">                        int idLocacao = generatedKeys.getInt(1);</span>
+
+                        // Atualiza estoque do filme
+<span class="fc" id="L329">                        filme.setQuantidadeEstoque(filme.getQuantidadeEstoque() - 1);</span>
+<span class="fc" id="L330">                        atualizarFilme(filme);</span>
+
+<span class="fc" id="L332">                        Locacao locacao = new Locacao(idLocacao, cliente, filme, LocalDate.now(), dataPrevistaDevolucao);</span>
+<span class="fc" id="L333">                        logger.info(&quot;Locação realizada com sucesso. ID: &quot; + idLocacao);</span>
+<span class="fc" id="L334">                        return locacao;</span>
+                    } else {
+<span class="nc" id="L336">                        throw new SQLException(&quot;Falha ao obter ID da locação.&quot;);</span>
+                    }
+                }
+
+<span class="nc" id="L340">            } catch (SQLException e) {</span>
+<span class="nc" id="L341">                logger.log(Level.SEVERE, &quot;Erro ao realizar locação.&quot;, e);</span>
+<span class="nc" id="L342">                throw new RuntimeException(e);</span>
+            }
+        }
+    }
+
+    public void registrarDevolucao(int idLocacao) {
+<span class="fc" id="L348">        String sqlBusca = &quot;SELECT * FROM locacao WHERE id = ?&quot;;</span>
+<span class="fc" id="L349">        String sqlAtualiza = &quot;UPDATE locacao SET devolvido = 1 WHERE id = ?&quot;;</span>
+
+<span class="fc" id="L351">        synchronized(lockDB) {</span>
+<span class="fc" id="L352">            try (PreparedStatement pstmtBusca = conn.prepareStatement(sqlBusca)) {</span>
+<span class="fc" id="L353">                pstmtBusca.setInt(1, idLocacao);</span>
+<span class="fc" id="L354">                try (ResultSet rs = pstmtBusca.executeQuery()) {</span>
+<span class="fc bfc" id="L355" title="All 2 branches covered.">                    if (rs.next()) {</span>
+<span class="fc" id="L356">                        int idFilme = rs.getInt(&quot;id_filme&quot;);</span>
+<span class="fc" id="L357">                        Filme filme = buscarFilmePorId(idFilme);</span>
+<span class="pc bpc" id="L358" title="1 of 2 branches missed.">                        if (filme == null) {</span>
+<span class="nc" id="L359">                            throw new SQLException(&quot;Filme da locação não encontrado&quot;);</span>
+                        }
+
+                        // Atualiza estoque
+<span class="fc" id="L363">                        filme.setQuantidadeEstoque(filme.getQuantidadeEstoque() + 1);</span>
+<span class="fc" id="L364">                        atualizarFilme(filme);</span>
+
+                        // Atualiza status devolvido no banco
+<span class="fc" id="L367">                        try (PreparedStatement pstmtAtualiza = conn.prepareStatement(sqlAtualiza)) {</span>
+<span class="fc" id="L368">                            pstmtAtualiza.setInt(1, idLocacao);</span>
+<span class="fc" id="L369">                            pstmtAtualiza.executeUpdate();</span>
+                        }
+
+<span class="fc" id="L372">                        logger.info(&quot;Devolução registrada com sucesso para locação ID: &quot; + idLocacao);</span>
+<span class="fc" id="L373">                    } else {</span>
+<span class="fc" id="L374">                        throw new SQLException(&quot;Locação não encontrada&quot;);</span>
+                    }
+                }
+<span class="fc" id="L377">            } catch (SQLException e) {</span>
+<span class="fc" id="L378">                logger.log(Level.SEVERE, &quot;Erro ao registrar devolução.&quot;, e);</span>
+<span class="fc" id="L379">                throw new RuntimeException(e);</span>
+            }
+        }
+<span class="fc" id="L382">    }</span>
+
+    public List&lt;Locacao&gt; listarLocacoes() {
+<span class="fc" id="L385">        List&lt;Locacao&gt; locacoes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L386">        String sql = &quot;SELECT l.id, l.id_cliente, l.id_filme, l.data_aluguel, l.data_prevista_devolucao, l.devolvido, &quot; +</span>
+                &quot;c.nome AS nome_cliente, c.telefone, c.endereco, &quot; +
+                &quot;f.titulo, f.diretor, f.ano_lancamento, f.genero, f.data_estreia, f.categoria, f.duracao, f.quantidade_estoque &quot; +
+                &quot;FROM locacao l &quot; +
+                &quot;JOIN cliente c ON l.id_cliente = c.id &quot; +
+                &quot;JOIN filmeMarvel f ON l.id_filme = f.id&quot;;
+
+<span class="fc" id="L393">        try (Statement stmt = conn.createStatement();</span>
+<span class="fc" id="L394">             ResultSet rs = stmt.executeQuery(sql)) {</span>
+<span class="fc bfc" id="L395" title="All 2 branches covered.">            while (rs.next()) {</span>
+<span class="fc" id="L396">                Cliente cliente = new Cliente(</span>
+<span class="fc" id="L397">                        rs.getInt(&quot;id_cliente&quot;),</span>
+<span class="fc" id="L398">                        rs.getString(&quot;nome_cliente&quot;),</span>
+<span class="fc" id="L399">                        rs.getString(&quot;telefone&quot;),</span>
+<span class="fc" id="L400">                        rs.getString(&quot;endereco&quot;));</span>
+<span class="fc" id="L401">                Filme filme = new Filme(</span>
+<span class="fc" id="L402">                        rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L403">                        rs.getString(&quot;titulo&quot;),</span>
+<span class="fc" id="L404">                        rs.getString(&quot;categoria&quot;),</span>
+<span class="fc" id="L405">                        rs.getInt(&quot;duracao&quot;),</span>
+<span class="fc" id="L406">                        rs.getInt(&quot;quantidade_estoque&quot;),</span>
+<span class="fc" id="L407">                        rs.getString(&quot;diretor&quot;),</span>
+<span class="fc" id="L408">                        rs.getInt(&quot;ano_lancamento&quot;),</span>
+<span class="fc" id="L409">                        rs.getString(&quot;genero&quot;),</span>
+<span class="fc" id="L410">                        rs.getString(&quot;data_estreia&quot;));</span>
+
+<span class="fc" id="L412">                Locacao locacao = new Locacao(</span>
+<span class="fc" id="L413">                        rs.getInt(&quot;id&quot;),</span>
+<span class="fc" id="L414">                        cliente,</span>
+<span class="fc" id="L415">                        filme,</span>
+<span class="fc" id="L416">                        LocalDate.parse(rs.getString(&quot;data_aluguel&quot;)),</span>
+<span class="fc" id="L417">                        LocalDate.parse(rs.getString(&quot;data_prevista_devolucao&quot;)));</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">                if (rs.getInt(&quot;devolvido&quot;) == 1) {</span>
+<span class="fc" id="L419">                    locacao.registrarDevolucao();</span>
+                }
+<span class="fc" id="L421">                locacoes.add(locacao);</span>
+            }
+<span class="fc" id="L423">            logger.info(&quot;Locações listadas com sucesso. Total: &quot; + locacoes.size());</span>
+<span class="nc" id="L424">        } catch (SQLException e) {</span>
+<span class="nc" id="L425">            logger.log(Level.SEVERE, &quot;Erro ao listar locações.&quot;, e);</span>
+        }
+<span class="fc" id="L427">        return locacoes;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

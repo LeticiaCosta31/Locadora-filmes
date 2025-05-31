@@ -20,12 +20,41 @@ public class Locacao {
         this.devolvido = false;
     }
 
+    public Locacao(){
+        
+    }
+
     public int getId() { return id; }
     public Cliente getCliente() { return cliente; }
     public Filme getFilme() { return filme; }
     public LocalDate getDataAluguel() { return dataAluguel; }
     public LocalDate getDataPrevistaDevolucao() { return dataPrevistaDevolucao; }
     public boolean isDevolvido() { return devolvido; }
+    
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public void setFilme(Filme filme) {
+        this.filme = filme;
+    }
+
+    public void setDataAluguel(LocalDate dataAluguel) {
+        this.dataAluguel = dataAluguel;
+    }
+
+    public void setDataPrevistaDevolucao(LocalDate dataPrevistaDevolucao) {
+        this.dataPrevistaDevolucao = dataPrevistaDevolucao;
+    }
+
+    public void setDevolvido(boolean devolvido) {
+        this.devolvido = devolvido;
+    }
 
     public void registrarDevolucao() {
         this.devolvido = true;

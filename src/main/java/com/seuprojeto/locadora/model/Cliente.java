@@ -17,6 +17,9 @@ public class Cliente {
         this.endereco = endereco;
         this.alugueisAtivos = new ArrayList<>();
     }
+    public Cliente(){
+        
+    }
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }

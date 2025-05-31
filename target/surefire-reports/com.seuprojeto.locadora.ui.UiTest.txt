@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: com.seuprojeto.locadora.ui.UiTest
+-------------------------------------------------------------------------------
+Tests run: 17, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.370 s <<< FAILURE! -- in com.seuprojeto.locadora.ui.UiTest
+com.seuprojeto.locadora.ui.UiTest.testMenuListarFilmesESair -- Time elapsed: 0.020 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "com.seuprojeto.locadora.service.Locadora.limparTabelas()" because "this.locadora" is null
+	at com.seuprojeto.locadora.ui.UiTest.testMenuListarFilmesESair(UiTest.java:252)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+

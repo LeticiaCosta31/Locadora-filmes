@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Filme.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Locadora Filmes</a> &gt; <a href="index.source.html" class="el_package">com.seuprojeto.locadora.model</a> &gt; <span class="el_source">Filme.java</span></div><h1>Filme.java</h1><pre class="source lang-java linenums">package com.seuprojeto.locadora.model;
+
+public class Filme {
+    private int id;
+    private String titulo;
+    private String categoria;
+    private int duracao; // em minutos
+    private int quantidadeEstoque;
+    private String diretor;
+    private int anoLancamento;
+    private String genero;
+    private String dataEstreia;
+
+<span class="fc" id="L14">    public Filme(int id, String titulo, String categoria, int duracao, int quantidadeEstoque,</span>
+                 String diretor, int anoLancamento, String genero, String dataEstreia) {
+<span class="fc" id="L16">        this.id = id;</span>
+<span class="fc" id="L17">        this.titulo = titulo;</span>
+<span class="fc" id="L18">        this.categoria = categoria;</span>
+<span class="fc" id="L19">        this.duracao = duracao;</span>
+<span class="fc" id="L20">        this.quantidadeEstoque = quantidadeEstoque;</span>
+<span class="fc" id="L21">        this.diretor = diretor;</span>
+<span class="fc" id="L22">        this.anoLancamento = anoLancamento;</span>
+<span class="fc" id="L23">        this.genero = genero;</span>
+<span class="fc" id="L24">        this.dataEstreia = dataEstreia;</span>
+<span class="fc" id="L25">    }</span>
+<span class="fc" id="L26">    public Filme(){</span>
+        
+<span class="fc" id="L28">    }</span>
+
+    // Getters e Setters
+<span class="fc" id="L31">    public int getId() { return id; }</span>
+<span class="fc" id="L32">    public void setId(int id) { this.id = id; }</span>
+
+<span class="fc" id="L34">    public String getTitulo() { return titulo; }</span>
+<span class="fc" id="L35">    public void setTitulo(String titulo) { this.titulo = titulo; }</span>
+
+<span class="fc" id="L37">    public String getCategoria() { return categoria; }</span>
+<span class="fc" id="L38">    public void setCategoria(String categoria) { this.categoria = categoria; }</span>
+
+<span class="fc" id="L40">    public int getDuracao() { return duracao; }</span>
+<span class="fc" id="L41">    public void setDuracao(int duracao) { this.duracao = duracao; }</span>
+
+<span class="fc" id="L43">    public int getQuantidadeEstoque() { return quantidadeEstoque; }</span>
+<span class="fc" id="L44">    public void setQuantidadeEstoque(int quantidadeEstoque) { this.quantidadeEstoque = quantidadeEstoque; }</span>
+
+<span class="fc" id="L46">    public String getDiretor() { return diretor; }</span>
+<span class="fc" id="L47">    public void setDiretor(String diretor) { this.diretor = diretor; }</span>
+
+<span class="fc" id="L49">    public int getAnoLancamento() { return anoLancamento; }</span>
+<span class="fc" id="L50">    public void setAnoLancamento(int anoLancamento) { this.anoLancamento = anoLancamento; }</span>
+
+<span class="fc" id="L52">    public String getGenero() { return genero; }</span>
+<span class="fc" id="L53">    public void setGenero(String genero) { this.genero = genero; }</span>
+
+<span class="fc" id="L55">    public String getDataEstreia() { return dataEstreia; }</span>
+<span class="fc" id="L56">    public void setDataEstreia(String dataEstreia) { this.dataEstreia = dataEstreia; }</span>
+
+    public boolean verificarDisponibilidade() {
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        return quantidadeEstoque &gt; 0;</span>
+    }
+
+    public void atualizarEstoque(int quantidade) {
+<span class="nc" id="L63">        this.quantidadeEstoque += quantidade; // Pode ser positivo ou negativo</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        if (this.quantidadeEstoque &lt; 0) {</span>
+<span class="nc" id="L65">            this.quantidadeEstoque = 0;</span>
+        }
+<span class="nc" id="L67">    }</span>
+
+    @Override
+    public String toString() {
+<span class="fc" id="L71">        return &quot;Filme [id=&quot; + id + &quot;, titulo=&quot; + titulo + &quot;, categoria=&quot; + categoria + &quot;, duracao=&quot; + duracao +</span>
+<span class="fc" id="L72">                &quot; min, estoque=&quot; + quantidadeEstoque + &quot;, diretor=&quot; + diretor + &quot;, anoLancamento=&quot; + anoLancamento +</span>
+<span class="fc" id="L73">                &quot;, genero=&quot; + genero + &quot;, dataEstreia=&quot; + dataEstreia + &quot;]&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

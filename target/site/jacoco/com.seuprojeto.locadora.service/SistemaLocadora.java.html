@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SistemaLocadora.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Locadora Filmes</a> &gt; <a href="index.source.html" class="el_package">com.seuprojeto.locadora.service</a> &gt; <span class="el_source">SistemaLocadora.java</span></div><h1>SistemaLocadora.java</h1><pre class="source lang-java linenums">package com.seuprojeto.locadora.service;
+
+import com.seuprojeto.locadora.model.*;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+public class SistemaLocadora {
+
+    private Locadora locadora;
+    private Estoque estoque;
+    private Notificacao notificacao;
+
+<span class="fc" id="L15">    public SistemaLocadora() {</span>
+<span class="fc" id="L16">        locadora = new Locadora();</span>
+<span class="fc" id="L17">        estoque = new Estoque();</span>
+<span class="fc" id="L18">        notificacao = new Notificacao();</span>
+<span class="fc" id="L19">    }</span>
+
+    // Filmes
+    public void cadastrarFilme(Filme filme, int quantidadeEstoque) {
+<span class="fc" id="L23">        locadora.cadastrarFilme(filme);</span>
+<span class="fc" id="L24">        estoque.adicionarFilme(filme, quantidadeEstoque);</span>
+<span class="fc" id="L25">    }</span>
+
+    public List&lt;Filme&gt; listarFilmesDisponiveis() {
+<span class="fc" id="L28">        List&lt;Filme&gt; disponiveis = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        for (Filme f : locadora.listarFilmes()) {</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">            if (estoque.verificarDisponibilidade(f)) {</span>
+<span class="fc" id="L31">                disponiveis.add(f);</span>
+            }
+        }
+<span class="fc" id="L34">        return disponiveis;</span>
+    }
+
+    // Clientes
+    public void cadastrarCliente(Cliente cliente) {
+<span class="nc" id="L39">        locadora.cadastrarCliente(cliente);</span>
+<span class="nc" id="L40">    }</span>
+
+    // Locação
+    public Locacao realizarLocacao(int idCliente, int idFilme, LocalDate dataPrevistaDevolucao) {
+<span class="fc" id="L44">        Filme filme = locadora.buscarFilmePorId(idFilme);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (filme == null) {</span>
+<span class="fc" id="L46">            throw new IllegalArgumentException(&quot;Filme não encontrado&quot;);</span>
+        }
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!estoque.verificarDisponibilidade(filme)) {</span>
+<span class="fc" id="L49">            throw new IllegalStateException(&quot;Filme não disponível no estoque&quot;);</span>
+        }
+
+<span class="fc" id="L52">        Locacao locacao = locadora.realizarLocacao(idCliente, idFilme, dataPrevistaDevolucao);</span>
+<span class="fc" id="L53">        estoque.atualizarEstoque(filme, estoque.quantidadeDisponivel(filme) - 1);</span>
+
+<span class="fc" id="L55">        return locacao;</span>
+    }
+
+    public void registrarDevolucao(int idLocacao) {
+<span class="fc" id="L59">        Locacao locacao = null;</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">        for (Locacao l : locadora.listarLocacoes()) {</span>
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">            if (l.getId() == idLocacao) {</span>
+<span class="fc" id="L62">                locacao = l;</span>
+<span class="fc" id="L63">                break;</span>
+            }
+        }
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (locacao == null) {</span>
+<span class="fc" id="L67">            throw new IllegalArgumentException(&quot;Locação não encontrada&quot;);</span>
+        }
+
+<span class="fc" id="L70">        locadora.registrarDevolucao(idLocacao);</span>
+<span class="fc" id="L71">        Filme filme = locacao.getFilme();</span>
+<span class="fc" id="L72">        estoque.atualizarEstoque(filme, estoque.quantidadeDisponivel(filme) + 1);</span>
+<span class="fc" id="L73">    }</span>
+
+    // Notificações
+    public void enviarNotificacaoAtraso(Cliente cliente) {
+<span class="nc" id="L77">        notificacao.enviarNotificacaoAtraso(cliente);</span>
+<span class="nc" id="L78">    }</span>
+
+    // Outros métodos podem ser adicionados conforme necessário
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>

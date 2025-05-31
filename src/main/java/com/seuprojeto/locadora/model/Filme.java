@@ -23,6 +23,9 @@ public class Filme {
         this.genero = genero;
         this.dataEstreia = dataEstreia;
     }
+    public Filme(){
+        
+    }
 
     // Getters e Setters
     public int getId() { return id; }

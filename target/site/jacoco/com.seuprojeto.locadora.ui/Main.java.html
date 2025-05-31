@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Locadora Filmes</a> &gt; <a href="index.source.html" class="el_package">com.seuprojeto.locadora.ui</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package com.seuprojeto.locadora.ui;
+
+import com.seuprojeto.locadora.model.Cliente;
+import com.seuprojeto.locadora.model.Filme;
+import com.seuprojeto.locadora.model.Locacao;
+import com.seuprojeto.locadora.service.Locadora;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Scanner;
+
+<span class="nc" id="L12">public class Main {</span>
+
+    private static void listarFilmes(Locadora locadora) {
+<span class="fc" id="L15">        List&lt;Filme&gt; filmes = locadora.listarFilmes();</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">        if (filmes.isEmpty()) {</span>
+<span class="fc" id="L17">            System.out.println(&quot;Nenhum filme cadastrado.&quot;);</span>
+<span class="fc" id="L18">        } else {</span>
+<span class="fc" id="L19">            filmes.forEach(System.out::println);</span>
+        }
+<span class="fc" id="L21">    }</span>
+
+    private static void listarClientes(Locadora locadora) {
+<span class="fc" id="L24">        List&lt;Cliente&gt; clientes = locadora.listarClientes();</span>
+<span class="fc bfc" id="L25" title="All 2 branches covered.">        if (clientes.isEmpty()) {</span>
+<span class="fc" id="L26">            System.out.println(&quot;Nenhum cliente cadastrado.&quot;);</span>
+<span class="fc" id="L27">        } else {</span>
+<span class="fc" id="L28">            clientes.forEach(System.out::println);</span>
+        }
+<span class="fc" id="L30">    }</span>
+
+    private static void listarLocacoes(Locadora locadora) {
+<span class="fc" id="L33">        List&lt;Locacao&gt; locacoes = locadora.listarLocacoes();</span>
+<span class="fc bfc" id="L34" title="All 2 branches covered.">        if (locacoes.isEmpty()) {</span>
+<span class="fc" id="L35">            System.out.println(&quot;Nenhuma locação encontrada.&quot;);</span>
+<span class="fc" id="L36">        } else {</span>
+<span class="fc" id="L37">            locacoes.forEach(System.out::println);</span>
+        }
+<span class="fc" id="L39">    }</span>
+
+    public static void main(String[] args) {
+<span class="fc" id="L42">        Locadora locadora = new Locadora();</span>
+<span class="fc" id="L43">        Scanner scanner = new Scanner(System.in);</span>
+
+<span class="nc" id="L45">        while (true) {</span>
+<span class="fc" id="L46">            System.out.println(&quot;\nMenu:&quot;);</span>
+<span class="fc" id="L47">            System.out.println(&quot;1. Listar Filmes&quot;);</span>
+<span class="fc" id="L48">            System.out.println(&quot;2. Cadastrar Filme&quot;);</span>
+<span class="fc" id="L49">            System.out.println(&quot;3. Listar Clientes&quot;);</span>
+<span class="fc" id="L50">            System.out.println(&quot;4. Cadastrar Cliente&quot;);</span>
+<span class="fc" id="L51">            System.out.println(&quot;5. Realizar Locação&quot;);</span>
+<span class="fc" id="L52">            System.out.println(&quot;6. Registrar Devolução&quot;);</span>
+<span class="fc" id="L53">            System.out.println(&quot;7. Listar Locações&quot;);</span>
+<span class="fc" id="L54">            System.out.println(&quot;8. Sair&quot;);</span>
+<span class="fc" id="L55">            System.out.print(&quot;Escolha uma opção: &quot;);</span>
+
+<span class="fc" id="L57">            int opcao = scanner.nextInt();</span>
+<span class="fc" id="L58">            scanner.nextLine();</span>
+
+            try {
+<span class="pc bpc" id="L61" title="7 of 9 branches missed.">                switch (opcao) {</span>
+<span class="fc" id="L62">                    case 1 -&gt; listarFilmes(locadora);</span>
+
+                    case 2 -&gt; {
+<span class="nc" id="L65">                        System.out.print(&quot;ID do filme: &quot;);</span>
+<span class="nc" id="L66">                        int id = scanner.nextInt();</span>
+<span class="nc" id="L67">                        scanner.nextLine();</span>
+<span class="nc" id="L68">                        System.out.print(&quot;Título: &quot;);</span>
+<span class="nc" id="L69">                        String titulo = scanner.nextLine();</span>
+<span class="nc" id="L70">                        System.out.print(&quot;Categoria: &quot;);</span>
+<span class="nc" id="L71">                        String categoria = scanner.nextLine();</span>
+<span class="nc" id="L72">                        System.out.print(&quot;Duração (minutos): &quot;);</span>
+<span class="nc" id="L73">                        int duracao = scanner.nextInt();</span>
+<span class="nc" id="L74">                        System.out.print(&quot;Quantidade no estoque: &quot;);</span>
+<span class="nc" id="L75">                        int estoque = scanner.nextInt();</span>
+<span class="nc" id="L76">                        scanner.nextLine();</span>
+<span class="nc" id="L77">                        System.out.print(&quot;Diretor: &quot;);</span>
+<span class="nc" id="L78">                        String diretor = scanner.nextLine();</span>
+<span class="nc" id="L79">                        System.out.print(&quot;Ano de lançamento: &quot;);</span>
+<span class="nc" id="L80">                        int ano = scanner.nextInt();</span>
+<span class="nc" id="L81">                        scanner.nextLine();</span>
+<span class="nc" id="L82">                        System.out.print(&quot;Gênero: &quot;);</span>
+<span class="nc" id="L83">                        String genero = scanner.nextLine();</span>
+<span class="nc" id="L84">                        System.out.print(&quot;Data de estreia (YYYY-MM-DD): &quot;);</span>
+<span class="nc" id="L85">                        String dataEstreia = scanner.nextLine();</span>
+
+<span class="nc" id="L87">                        Filme filme = new Filme(id, titulo, categoria, duracao, estoque, diretor, ano, genero, dataEstreia);</span>
+<span class="nc" id="L88">                        locadora.cadastrarFilme(filme);</span>
+<span class="nc" id="L89">                        System.out.println(&quot;Filme cadastrado com sucesso!&quot;);</span>
+                    }
+
+<span class="nc" id="L92">                    case 3 -&gt; listarClientes(locadora);</span>
+
+                    case 4 -&gt; {
+<span class="nc" id="L95">                        System.out.print(&quot;ID do cliente: &quot;);</span>
+<span class="nc" id="L96">                        int id = scanner.nextInt();</span>
+<span class="nc" id="L97">                        scanner.nextLine();</span>
+<span class="nc" id="L98">                        System.out.print(&quot;Nome: &quot;);</span>
+<span class="nc" id="L99">                        String nome = scanner.nextLine();</span>
+<span class="nc" id="L100">                        System.out.print(&quot;Telefone: &quot;);</span>
+<span class="nc" id="L101">                        String telefone = scanner.nextLine();</span>
+<span class="nc" id="L102">                        System.out.print(&quot;Endereço: &quot;);</span>
+<span class="nc" id="L103">                        String endereco = scanner.nextLine();</span>
+
+<span class="nc" id="L105">                        Cliente cliente = new Cliente(id, nome, telefone, endereco);</span>
+<span class="nc" id="L106">                        locadora.cadastrarCliente(cliente);</span>
+<span class="nc" id="L107">                        System.out.println(&quot;Cliente cadastrado com sucesso!&quot;);</span>
+                    }
+
+                    case 5 -&gt; {
+<span class="nc" id="L111">                        System.out.print(&quot;ID do cliente: &quot;);</span>
+<span class="nc" id="L112">                        int idCliente = scanner.nextInt();</span>
+<span class="nc" id="L113">                        System.out.print(&quot;ID do filme: &quot;);</span>
+<span class="nc" id="L114">                        int idFilme = scanner.nextInt();</span>
+<span class="nc" id="L115">                        scanner.nextLine();</span>
+<span class="nc" id="L116">                        System.out.print(&quot;Data prevista de devolução (YYYY-MM-DD): &quot;);</span>
+<span class="nc" id="L117">                        String dataPrev = scanner.nextLine();</span>
+
+<span class="nc" id="L119">                        Locacao locacao = locadora.realizarLocacao(idCliente, idFilme, LocalDate.parse(dataPrev));</span>
+<span class="nc" id="L120">                        System.out.println(&quot;Locação realizada com sucesso! ID da locação: &quot; + locacao.getId());</span>
+                    }
+
+                    case 6 -&gt; {
+<span class="nc" id="L124">                        System.out.print(&quot;ID da locação para devolução: &quot;);</span>
+<span class="nc" id="L125">                        int idLocacao = scanner.nextInt();</span>
+<span class="nc" id="L126">                        scanner.nextLine();</span>
+<span class="nc" id="L127">                        locadora.registrarDevolucao(idLocacao);</span>
+<span class="nc" id="L128">                        System.out.println(&quot;Devolução registrada com sucesso!&quot;);</span>
+                    }
+
+<span class="nc" id="L131">                    case 7 -&gt; listarLocacoes(locadora);</span>
+
+                    case 8 -&gt; {
+<span class="fc" id="L134">                        System.out.println(&quot;Saindo...&quot;);</span>
+<span class="fc" id="L135">                        scanner.close();</span>
+<span class="fc" id="L136">                        return;</span>
+                    }
+
+<span class="nc" id="L139">                    default -&gt; System.out.println(&quot;Opção inválida.&quot;);</span>
+                }
+<span class="nc" id="L141">            } catch (Exception e) {</span>
+<span class="nc" id="L142">                System.out.println(&quot;Erro: &quot; + e.getMessage());</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.10.202304240956</span></div></body></html>
