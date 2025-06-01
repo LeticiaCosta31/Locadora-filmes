@@ -14,7 +14,7 @@ public class Locadora {
 
     private static final Logger logger = Logger.getLogger(Locadora.class.getName());
 
-    private final String url = "jdbc:sqlite:./locadora.db"; // ajuste seu caminho
+    private final String url = "jdbc:sqlite:./locadora.db"; 
 
     private final Object lockDB = new Object(); // objeto para sincronização
 

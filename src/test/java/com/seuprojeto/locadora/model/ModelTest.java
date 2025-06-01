@@ -1,7 +1,4 @@
 package com.seuprojeto.locadora.model;
-import com.seuprojeto.locadora.model.Cliente;
-import com.seuprojeto.locadora.model.Filme;
-import com.seuprojeto.locadora.model.Locacao;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

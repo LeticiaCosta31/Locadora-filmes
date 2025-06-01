@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.seuprojeto.locadora.ui.UiTest" time="0.37" tests="17" errors="1" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.seuprojeto.locadora.ui.UiTest" time="0.394" tests="16" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\zulu21.38.21-ca-jdk21.0.5-win_x64\bin"/>
-    <property name="sun.java.command" value="C:\Users\Yan\AppData\Local\Temp\surefire13850983262729670648\surefirebooter-20250531152336438_3.jar C:\Users\Yan\AppData\Local\Temp\surefire13850983262729670648 2025-05-31T15-23-36_243-jvmRun1 surefire-20250531152336438_1tmp surefire_0-20250531152336438_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220\surefirebooter-20250601143432021_3.jar C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220 2025-06-01T14-34-31_860-jvmRun1 surefire-20250601143432021_1tmp surefire_0-20250601143432021_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Yan\locadora-filmes\target\test-classes;C:\Users\Yan\locadora-filmes\target\classes;C:\Users\Yan\.m2\repository\org\xerial\sqlite-jdbc\3.41.2.1\sqlite-jdbc-3.41.2.1.jar;C:\Users\Yan\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Yan\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Yan\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Yan\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Yan\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Yan\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Yan\.m2\repository\org\mockito\mockito-core\5.4.0\mockito-core-5.4.0.jar;C:\Users\Yan\.m2\repository\net\bytebuddy\byte-buddy\1.14.5\byte-buddy-1.14.5.jar;C:\Users\Yan\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.5\byte-buddy-agent-1.14.5.jar;C:\Users\Yan\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Yan\.m2\repository\org\mockito\mockito-junit-jupiter\5.4.0\mockito-junit-jupiter-5.4.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Yan\AppData\Local\Temp\surefire13850983262729670648\surefirebooter-20250531152336438_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220\surefirebooter-20250601143432021_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-LTS"/>
@@ -62,58 +62,50 @@
   <testcase name="validarEntradaData_DeveAceitarDatasNosLimites" classname="com.seuprojeto.locadora.ui.UiTest" time="0.013">
     <system-out><![CDATA[Digite data 1: Digite data 2: ]]></system-out>
   </testcase>
-  <testcase name="validarEntradaTexto_DeveRejeitarEntradaVaziaEAceitarTexto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.002">
+  <testcase name="validarEntradaTexto_DeveRejeitarEntradaVaziaEAceitarTexto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.009">
     <system-out><![CDATA[Digite algo: O campo é obrigatório. Por favor, insira um valor válido.
 Digite algo: O campo é obrigatório. Por favor, insira um valor válido.
 Digite algo: ]]></system-out>
   </testcase>
-  <testcase name="validarAnoLancamento_DeveAceitarAnoDentroDoIntervalo" classname="com.seuprojeto.locadora.ui.UiTest" time="0.004">
+  <testcase name="validarAnoLancamento_DeveAceitarAnoDentroDoIntervalo" classname="com.seuprojeto.locadora.ui.UiTest" time="0.002">
     <system-out><![CDATA[Digite ano: Ano fora do intervalo permitido (1900-2100). Por favor, insira um ano válido.
 Digite ano: ]]></system-out>
   </testcase>
-  <testcase name="testListarClientes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.014"/>
-  <testcase name="testListarClientes_comLista_comClientesMostraDetalhes" classname="com.seuprojeto.locadora.ui.UiTest" time="0.022"/>
-  <testcase name="validarEntradaData_DeveRejeitarFormatoIncorreto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.004">
+  <testcase name="testListarClientes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.012"/>
+  <testcase name="testListarClientes_comLista_comClientesMostraDetalhes" classname="com.seuprojeto.locadora.ui.UiTest" time="0.026"/>
+  <testcase name="validarEntradaData_DeveRejeitarFormatoIncorreto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.002">
     <system-out><![CDATA[Digite uma data: Ano fora do intervalo permitido (1900-2100). Por favor, insira uma data válida.
 Digite uma data: ]]></system-out>
   </testcase>
-  <testcase name="validarEntradaTexto_DeveRejeitarApenasEspacos" classname="com.seuprojeto.locadora.ui.UiTest" time="0.003">
+  <testcase name="validarEntradaTexto_DeveRejeitarApenasEspacos" classname="com.seuprojeto.locadora.ui.UiTest" time="0.005">
     <system-out><![CDATA[Digite algo: O campo é obrigatório. Por favor, insira um valor válido.
 Digite algo: O campo é obrigatório. Por favor, insira um valor válido.
 Digite algo: ]]></system-out>
   </testcase>
-  <testcase name="testListarLocacoes_comLista_mostraDetalhes" classname="com.seuprojeto.locadora.ui.UiTest" time="0.016"/>
-  <testcase name="testValidarEntradaTexto_comValorVazio_retornaValido" classname="com.seuprojeto.locadora.ui.UiTest" time="0.206">
+  <testcase name="testListarLocacoes_comLista_mostraDetalhes" classname="com.seuprojeto.locadora.ui.UiTest" time="0.015"/>
+  <testcase name="testValidarEntradaTexto_comValorVazio_retornaValido" classname="com.seuprojeto.locadora.ui.UiTest" time="0.258">
     <system-out><![CDATA[Mensagem: O campo é obrigatório. Por favor, insira um valor válido.
 Mensagem: O campo é obrigatório. Por favor, insira um valor válido.
 Mensagem: ]]></system-out>
   </testcase>
-  <testcase name="testListarLocacoes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.003"/>
-  <testcase name="validarEntradaNumerica_DeveRejeitarStringsAntesDoNumero" classname="com.seuprojeto.locadora.ui.UiTest" time="0.004">
+  <testcase name="testListarLocacoes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.0"/>
+  <testcase name="validarEntradaNumerica_DeveRejeitarStringsAntesDoNumero" classname="com.seuprojeto.locadora.ui.UiTest" time="0.0">
     <system-out><![CDATA[Digite um número: A entrada deve ser um número. Por favor, tente novamente.
 Digite um número: A entrada deve ser um número. Por favor, tente novamente.
 Digite um número: ]]></system-out>
   </testcase>
-  <testcase name="validarEntradaNumerica_DeveAceitarApenasNumero" classname="com.seuprojeto.locadora.ui.UiTest" time="0.002">
+  <testcase name="validarEntradaNumerica_DeveAceitarApenasNumero" classname="com.seuprojeto.locadora.ui.UiTest" time="0.0">
     <system-out><![CDATA[Digite um número: A entrada deve ser um número. Por favor, tente novamente.
 Digite um número: ]]></system-out>
   </testcase>
-  <testcase name="validarAnoLancamento_DeveRejeitarAnoInvalidoEEntradaTexto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.003">
+  <testcase name="validarAnoLancamento_DeveRejeitarAnoInvalidoEEntradaTexto" classname="com.seuprojeto.locadora.ui.UiTest" time="0.016">
     <system-out><![CDATA[Digite ano: Ano fora do intervalo permitido (1900-2100). Por favor, insira um ano válido.
 Digite ano: A entrada deve ser um número. Por favor, tente novamente.
 Digite ano: ]]></system-out>
   </testcase>
-  <testcase name="testMenuListarFilmesESair" classname="com.seuprojeto.locadora.ui.UiTest" time="0.02">
-    <error message="Cannot invoke &quot;com.seuprojeto.locadora.service.Locadora.limparTabelas()&quot; because &quot;this.locadora&quot; is null" type="java.lang.NullPointerException"><![CDATA[java.lang.NullPointerException: Cannot invoke "com.seuprojeto.locadora.service.Locadora.limparTabelas()" because "this.locadora" is null
-	at com.seuprojeto.locadora.ui.UiTest.testMenuListarFilmesESair(UiTest.java:252)
-	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
-]]></error>
-  </testcase>
-  <testcase name="validarEntradaNumerica_DeveAceitarNumeroNegativo" classname="com.seuprojeto.locadora.ui.UiTest" time="0.001">
+  <testcase name="validarEntradaNumerica_DeveAceitarNumeroNegativo" classname="com.seuprojeto.locadora.ui.UiTest" time="0.004">
     <system-out><![CDATA[Digite um número: ]]></system-out>
   </testcase>
-  <testcase name="testListarFilmes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.008"/>
-  <testcase name="validarEntradaData_DeveAceitarDataValida" classname="com.seuprojeto.locadora.ui.UiTest" time="0.003"/>
+  <testcase name="testListarFilmes_mostraMensagemQuandoListaVazia" classname="com.seuprojeto.locadora.ui.UiTest" time="0.005"/>
+  <testcase name="validarEntradaData_DeveAceitarDataValida" classname="com.seuprojeto.locadora.ui.UiTest" time="0.007"/>
 </testsuite>
