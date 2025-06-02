@@ -5,7 +5,7 @@ import com.seuprojeto.locadora.model.Cliente;
 public class Notificacao {
 
     public void enviarNotificacaoAtraso(Cliente cliente) {
-        // Simulação simples de envio (pode substituir por email ou SMS)
+        // Simulação simples de envio 
         System.out.println("Notificação para cliente " + cliente.getNome() + ": Você possui locações atrasadas. Por favor, regularize.");
     }
 
