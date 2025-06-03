@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.seuprojeto.locadora.service.ServiceTest
 -------------------------------------------------------------------------------
-Tests run: 28, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.653 s -- in com.seuprojeto.locadora.service.ServiceTest
+Tests run: 28, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.283 s -- in com.seuprojeto.locadora.service.ServiceTest
