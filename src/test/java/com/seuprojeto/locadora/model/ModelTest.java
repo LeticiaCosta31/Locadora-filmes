@@ -1,4 +1,5 @@
 package com.seuprojeto.locadora.model;
+
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -70,7 +71,8 @@ public class ModelTest {
         locacao.registrarDevolucao();
         assertTrue(locacao.isDevolvido());
     }
-     @Test
+
+    @Test
     void testCategoriaGetSet() {
         Categoria categoria = new Categoria(1, "Ação");
         assertEquals(1, categoria.getId());
@@ -123,6 +125,13 @@ public class ModelTest {
         assertFalse(funcionario.autenticar("outroLogin", "senhaSegura"));
     }
 
+    @Test
+    void testFuncionarioToString() {
+        Funcionario funcionario = new Funcionario(5, "Maria", "Atendente", "maria123", "senha123");
+        String expected = "Funcionario [id=5, nome=Maria, cargo=Atendente]";
+        assertEquals(expected, funcionario.toString());
+    }
+
     // --- Teste Pagamento ---
     @Test
     void testPagamentoValidarProcessar() {
@@ -149,5 +158,27 @@ public class ModelTest {
         assertFalse(pagamentoInvalido2.validarPagamento());
         assertThrows(IllegalArgumentException.class, () -> pagamentoInvalido2.processarPagamento());
     }
-}
 
+    @Test
+    void testPagamentoToString() {
+        Cliente cliente = new Cliente(1, "Cliente Teste", "111222333", "Rua Teste");
+        Filme filme = new Filme(2, "Filme Teste", "Categoria", 90, 5, "Diretor Teste", 2021, "Genero", "2021-01-01");
+        Locacao locacao = new Locacao(10, cliente, filme, LocalDate.of(2024, 6, 1), LocalDate.of(2024, 6, 8));
+        Pagamento pagamento = new Pagamento(5, locacao, 150.0, LocalDate.of(2024, 6, 2), "Dinheiro");
+
+        String expected = "Pagamento [id=5, locacaoId=10, valor=150.0, dataPagamento=2024-06-02, tipo=Dinheiro]";
+        assertEquals(expected, pagamento.toString());
+    }
+
+    @Test
+    void testCategoriaToString() {
+        Categoria categoria = new Categoria(10, "Terror");
+        String expected = "Categoria [id=10, nome=Terror]";
+        assertEquals(expected, categoria.toString());
+
+        categoria.setId(20);
+        categoria.setNome("Drama");
+        expected = "Categoria [id=20, nome=Drama]";
+        assertEquals(expected, categoria.toString());
+    }
+}

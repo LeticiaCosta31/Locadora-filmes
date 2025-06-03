@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.seuprojeto.locadora.service.ServiceTest" time="6.073" tests="26" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.seuprojeto.locadora.service.ServiceTest" time="3.653" tests="28" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="BR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\zulu21.38.21-ca-jdk21.0.5-win_x64\bin"/>
-    <property name="sun.java.command" value="C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220\surefirebooter-20250601143432021_3.jar C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220 2025-06-01T14-34-31_860-jvmRun1 surefire-20250601143432021_1tmp surefire_0-20250601143432021_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\Yan\AppData\Local\Temp\surefire11335690062624542475\surefirebooter-20250602211012436_3.jar C:\Users\Yan\AppData\Local\Temp\surefire11335690062624542475 2025-06-02T21-10-12_220-jvmRun1 surefire-20250602211012436_1tmp surefire_0-20250602211012436_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\Yan\locadora-filmes\target\test-classes;C:\Users\Yan\locadora-filmes\target\classes;C:\Users\Yan\.m2\repository\org\xerial\sqlite-jdbc\3.41.2.1\sqlite-jdbc-3.41.2.1.jar;C:\Users\Yan\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.0\junit-jupiter-api-5.10.0.jar;C:\Users\Yan\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\Yan\.m2\repository\org\junit\platform\junit-platform-commons\1.10.0\junit-platform-commons-1.10.0.jar;C:\Users\Yan\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\Yan\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.0\junit-jupiter-engine-5.10.0.jar;C:\Users\Yan\.m2\repository\org\junit\platform\junit-platform-engine\1.10.0\junit-platform-engine-1.10.0.jar;C:\Users\Yan\.m2\repository\org\mockito\mockito-core\5.4.0\mockito-core-5.4.0.jar;C:\Users\Yan\.m2\repository\net\bytebuddy\byte-buddy\1.14.5\byte-buddy-1.14.5.jar;C:\Users\Yan\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.5\byte-buddy-agent-1.14.5.jar;C:\Users\Yan\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\Yan\.m2\repository\org\mockito\mockito-junit-jupiter\5.4.0\mockito-junit-jupiter-5.4.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\Yan\AppData\Local\Temp\surefire9716121476554027220\surefirebooter-20250601143432021_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\Yan\AppData\Local\Temp\surefire11335690062624542475\surefirebooter-20250602211012436_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="21.0.5+11-LTS"/>
@@ -59,44 +59,47 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="testEnviarNotificacaoAtraso" classname="com.seuprojeto.locadora.service.ServiceTest" time="3.986">
-    <system-out><![CDATA[Notificação para cliente João: Você possui locações atrasadas. Por favor, regularize.
-]]></system-out>
+  <testcase name="testCadastrarCliente_delegaParaLocadora" classname="com.seuprojeto.locadora.service.ServiceTest" time="2.109">
     <system-err><![CDATA[WARNING: A Java agent has been loaded dynamically (C:\Users\Yan\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.5\byte-buddy-agent-1.14.5.jar)
 WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
 WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
 WARNING: Dynamic loading of agents will be disallowed by default in a future release
 ]]></system-err>
   </testcase>
-  <testcase name="testEnviarAvisoFuncionario" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.069">
+  <testcase name="testEnviarNotificacaoAtraso" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.031">
+    <system-out><![CDATA[Notificação para cliente João: Você possui locações atrasadas. Por favor, regularize.
+]]></system-out>
+  </testcase>
+  <testcase name="testEnviarAvisoFuncionario" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034">
     <system-out><![CDATA[Aviso para funcionários: Aviso importante
 ]]></system-out>
   </testcase>
-  <testcase name="testRegistrarDevolucao_sucesso" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.406"/>
-  <testcase name="testRealizarLocacao_filmeNaoEncontrado" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.051"/>
-  <testcase name="testListarClientes" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.154"/>
-  <testcase name="testBuscarFilmePorIdExistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.058"/>
-  <testcase name="testFilmesMaisAlugados" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.051"/>
-  <testcase name="testCadastrarEListarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.045"/>
-  <testcase name="testBuscarFilmePorIdInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034"/>
-  <testcase name="testRegistrarDevolucaoLocacaoInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.039"/>
-  <testcase name="testListarLocacoes" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.083"/>
-  <testcase name="testCadastrarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034"/>
-  <testcase name="testRealizarLocacaoClienteInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.035"/>
-  <testcase name="testRealizarLocacao_filmeIndisponivel" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.027"/>
+  <testcase name="testRegistrarDevolucao_sucesso" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.066"/>
+  <testcase name="testRealizarLocacao_filmeNaoEncontrado" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.027"/>
+  <testcase name="testListarClientes" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.071"/>
+  <testcase name="testBuscarFilmePorIdExistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034"/>
+  <testcase name="testFilmesMaisAlugados" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.036"/>
+  <testcase name="testCadastrarEListarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.042"/>
+  <testcase name="testEnviarNotificacaoAtraso_delegaParaNotificacao" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.039"/>
+  <testcase name="testBuscarFilmePorIdInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.025"/>
+  <testcase name="testRegistrarDevolucaoLocacaoInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.038"/>
+  <testcase name="testListarLocacoes" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.074"/>
+  <testcase name="testCadastrarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.025"/>
+  <testcase name="testRealizarLocacaoClienteInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.044"/>
+  <testcase name="testRealizarLocacao_filmeIndisponivel" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.033"/>
   <testcase name="testRealizarLocacao_sucesso" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.031"/>
-  <testcase name="testRegistrarDevolucao_locacaoNaoEncontrada" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.026"/>
-  <testcase name="testGerarRelatorioPorPeriodo" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.035"/>
-  <testcase name="testRealizarLocacaoERegistrarDevolucao" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.094"/>
-  <testcase name="testListarFilmesDisponiveis" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.032"/>
-  <testcase name="testEnviarNotificacaoPromocao" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034">
+  <testcase name="testRegistrarDevolucao_locacaoNaoEncontrada" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.025"/>
+  <testcase name="testGerarRelatorioPorPeriodo" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.027"/>
+  <testcase name="testRealizarLocacaoERegistrarDevolucao" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.092"/>
+  <testcase name="testListarFilmesDisponiveis" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.04"/>
+  <testcase name="testEnviarNotificacaoPromocao" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.031">
     <system-out><![CDATA[Notificação para cliente Maria: Promoção especial! Promoção 50% OFF
 ]]></system-out>
   </testcase>
-  <testcase name="testCadastrarClienteSemEndereco" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.046"/>
+  <testcase name="testCadastrarClienteSemEndereco" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.042"/>
   <testcase name="testRealizarLocacaoFilmeSemEstoque" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.047"/>
-  <testcase name="testRealizarLocacaoFilmeInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.033"/>
-  <testcase name="testDeletarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.038"/>
-  <testcase name="testCadastrarEBuscarCliente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.034"/>
-  <testcase name="testAtualizarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.035"/>
+  <testcase name="testRealizarLocacaoFilmeInexistente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.036"/>
+  <testcase name="testDeletarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.046"/>
+  <testcase name="testCadastrarEBuscarCliente" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.041"/>
+  <testcase name="testAtualizarFilme" classname="com.seuprojeto.locadora.service.ServiceTest" time="0.042"/>
 </testsuite>

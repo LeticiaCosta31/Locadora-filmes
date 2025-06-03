@@ -243,7 +243,4 @@ public class UiTest {
         assertTrue(output.contains("Cliente Teste"));
         assertTrue(output.contains("Filme Teste"));
     }
-
-    
-
 }

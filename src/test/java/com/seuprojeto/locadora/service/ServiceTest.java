@@ -116,6 +116,13 @@ public class ServiceTest {
     // --- TESTES CLIENTE ---
 
     @Test
+    void testCadastrarCliente_delegaParaLocadora() {
+        Cliente cliente = new Cliente(123, "Teste", "99999999", "Rua Teste");
+        sistemaLocadora.cadastrarCliente(cliente);
+        verify(locadoraMock).cadastrarCliente(cliente);
+    }
+
+    @Test
     void testCadastrarEBuscarCliente() {
         Cliente cliente = new Cliente(1, "João Silva", "123456789", "Rua A, 123");
         locadora.cadastrarCliente(cliente);
@@ -247,6 +254,13 @@ public class ServiceTest {
     }
 
      // --- TESTES NOTIFICAÇÃO ---
+
+    @Test
+    void testEnviarNotificacaoAtraso_delegaParaNotificacao() {
+        Cliente cliente = new Cliente(456, "Cliente Notificação", "88888888", "Rua Notificação");
+        sistemaLocadora.enviarNotificacaoAtraso(cliente);
+        verify(notificacaoMock).enviarNotificacaoAtraso(cliente);
+    }
 
     @Test
     void testEnviarNotificacaoAtraso() {
@@ -399,6 +413,4 @@ public class ServiceTest {
         verify(locadoraMock).registrarDevolucao(1);
         verify(estoqueMock).atualizarEstoque(filme, 6);
     }
-
-
 }
