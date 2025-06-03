@@ -44,9 +44,6 @@ O sistema é ideal para fins educacionais, servindo como base para o desenvolvim
 
 ---
 
-## Autor
 
-Letícia Costa  
-lc655401@gmail.com
 
 
